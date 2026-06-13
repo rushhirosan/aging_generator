@@ -5,10 +5,13 @@
 /.next/
 /out/
 
-# misc
-.DS_Store
-*.pem
+# env (BYOK keys — never commit)
 .env
-.env.local
 .env*.local
+
+# deploy
+.vercel
+
+# local / editor
 .claude
+.DS_Store
