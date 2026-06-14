@@ -1,21 +1,7 @@
 import type { Gender, Message, SkinData } from "@/types";
+import { SKIN_SCORE_LEGEND, skinMetrics } from "@/lib/skinMetrics";
 
 const CONCERN_THRESHOLD = 60;
-
-type SkinMetric = {
-  key: keyof SkinData;
-  label: string;
-  score: number;
-};
-
-function skinMetrics(data: SkinData): SkinMetric[] {
-  return [
-    { key: "wrinkle", label: "シワ", score: data.wrinkle },
-    { key: "pore", label: "毛穴", score: data.pore },
-    { key: "moisture", label: "水分量", score: data.moisture },
-    { key: "acne", label: "ニキビ・肌荒れ", score: data.acne },
-  ];
-}
 
 function buildSkinAdviceContext(skinData: SkinData): string {
   const metrics = skinMetrics(skinData).sort((a, b) => a.score - b.score);
@@ -40,7 +26,7 @@ function buildSkinAdviceContext(skinData: SkinData): string {
 
   return `【肌データ（API自動計測。実際の見た目とずれることがある）】
 ${lines.join("\n")}
-100が最良。低いほどAPI上は気になる状態。
+${SKIN_SCORE_LEGEND}。
 
 ${advice}`;
 }

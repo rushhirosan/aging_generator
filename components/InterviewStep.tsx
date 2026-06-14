@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import type { AgingResult, Message, SkinData } from "@/types";
+import { SKIN_SCORE_LEGEND, skinMetrics } from "@/lib/skinMetrics";
 
 type Props = {
   currentAge: number;
@@ -114,11 +115,10 @@ export default function InterviewStep({
           <h3 className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
             肌データ
           </h3>
-          <ScoreBar label="水分量" value={skinData.moisture} />
-          <ScoreBar label="シワ" value={skinData.wrinkle} />
-          <ScoreBar label="毛穴" value={skinData.pore} />
-          <ScoreBar label="ニキビ" value={skinData.acne} />
-          <p className="text-xs text-stone-600">100が最良・低いほど気になる状態</p>
+          {skinMetrics(skinData).map((m) => (
+            <ScoreBar key={m.key} label={m.label} value={m.score} />
+          ))}
+          <p className="text-xs text-stone-600">{SKIN_SCORE_LEGEND}</p>
         </div>
       </aside>
 
